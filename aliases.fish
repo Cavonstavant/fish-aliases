@@ -42,6 +42,16 @@ function nmap_udp -d "[i] Usage: nmap_udp ip (options)" -w nmap -a ip
   end
 end
 
+# Web enum
+
+function scan_vhost -d "[i] Usage: scan_vhosts host (options)" -w ffuf -a host_name
+  if test $(count $argv) -eq 0
+    echo "[i] Usage: scan_vhosts host (options)"
+  else
+    ffuf -u http://$host_name/ -H "Host: FUZZ."$host_name -w /usr/share/seclists/Discovery/DNS/dns-Jhaddix.txt
+  end
+end  
+
 # # Reverse shells
 
 function gen_ps_rev -d "[i] Usage: gen_ps_rev ip port" -a ip -a port
